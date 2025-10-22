@@ -1,10 +1,6 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-// import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm";
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-
-console.log(galleryItems);
 
 const divgalEl = document.querySelector('.gallery');
 const newStructEl = galleryItems.map((elem) => `
@@ -24,4 +20,5 @@ let gallery = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
     showCounter: false,
+    spinner: true,
 });

@@ -20,9 +20,9 @@ formEl.addEventListener("input", checkInput);
 function checkInput(event) {
     event.preventDefault();
     switch (event.target.nodeName) {
-        case "INPUT": formData.email = event.target.value;
+        case "INPUT": formData.email = event.target.value.trim();
             break;
-        case "TEXTAREA": formData.message = event.target.value;
+        case "TEXTAREA": formData.message = event.target.value.trim();
             break;
         case "FORM":
             if ( formData.email === "" || formData.message === "" ) {
