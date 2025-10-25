@@ -1,41 +1,28 @@
 
 const formEl = document.querySelector(".feedback-form");
-const formData = {
-    email: "",
-    message: "",
-};
-const pp = JSON.parse(localStorage.getItem("feedback-form-state"));
+const { email, message } = formEl.elements;
+const storageName = 'feedback-form-state';
 
-if (pp) {
-    formData.email = pp.email;
-    formData.message = pp.message;
-    };
+let formData = JSON.parse(localStorage.getItem(storageName)) || { email : "", message : "" };
 
-formEl.elements[0].value = formData.email;
-formEl.elements[1].value = formData.message;
+email.value = formData.email;
+message.value = formData.message;
 
-formEl.addEventListener("submit", checkInput);
 formEl.addEventListener("input", checkInput);
+formEl.addEventListener("submit", checkSubmit);
 
-function checkInput(event) {
+function checkInput() {
+    formData = {email : email.value.trim(), message: message.value.trim()};
+    localStorage.setItem(storName, JSON.stringify(formData));
+}
+
+function checkSubmit(event) {
     event.preventDefault();
-    switch (event.target.nodeName) {
-        case "INPUT": formData.email = event.target.value.trim();
-            break;
-        case "TEXTAREA": formData.message = event.target.value.trim();
-            break;
-        case "FORM":
-            if ( formData.email === "" || formData.message === "" ) {
-                alert("Fill please all fields");
-                return;
-            }
-            console.log(formData);
-            localStorage.removeItem("feedback-form-state");
-            formEl.elements[0].value = "";
-            formEl.elements[1].value = "";
-            formData.email = "";
-            formData.message = "";
-            return;
-    };
-    localStorage.setItem("feedback-form-state", JSON.stringify(formData));
+        if ( formData.email === "" || formData.message === "" ) {
+            return alert("Fill please all fields");
+        }
+        console.log(formData);
+        localStorage.removeItem(storageName);
+        event.currentTarget.reset();
+        formData = {}
 };
